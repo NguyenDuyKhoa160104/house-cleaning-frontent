@@ -1,37 +1,44 @@
 import React from 'react';
-import { Menu, Bell, Search } from 'lucide-react';
+import { Bell, Search } from 'lucide-react';
 
-export default function AdminHeader({ toggleSidebar }) {
+export const AdminHeader = () => {
     return (
-        <header className="h-16 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10 shrink-0">
-            <div className="flex items-center">
-                <button
-                    onClick={toggleSidebar}
-                    className="p-2 mr-4 rounded-md text-gray-500 hover:bg-gray-100 lg:hidden focus:outline-none"
-                >
-                    <Menu size={24} />
-                </button>
+        <header className="fixed top-0 inset-x-0 z-40 h-16 bg-white shadow-sm border-b border-gray-200 flex items-center justify-between px-6">
 
-                {/* Thanh tìm kiếm */}
-                <div className="hidden sm:flex items-center bg-gray-100 rounded-lg px-3 py-2 w-96 focus-within:ring-2 focus-within:ring-blue-500 focus-within:bg-white transition-all">
-                    <Search size={18} className="text-gray-400" />
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm..."
-                        className="bg-transparent border-none outline-none ml-2 w-full text-sm text-gray-700 placeholder-gray-400"
-                    />
-                </div>
+            {/* Cụm Logo bằng hình ảnh */}
+            <div className="flex items-center w-48">
+                <img
+                    src="https://placehold.co/120x40/2563eb/white?text=LOGO"
+                    alt="Logo placeholder"
+                    className="h-9 object-contain rounded"
+                />
             </div>
 
-            <div className="flex items-center gap-4">
-                <button className="p-2 rounded-full text-gray-500 hover:bg-gray-100 relative">
+            {/* Thanh tìm kiếm ở giữa */}
+            <div className="hidden sm:flex items-center bg-gray-50 rounded-full px-4 py-2 w-96 border border-gray-200 focus-within:ring-2 focus-within:ring-blue-100 focus-within:border-blue-400 transition-all">
+                <Search size={18} className="text-gray-400" />
+                <input
+                    type="text"
+                    placeholder="Tìm mã ca dọn, SĐT khách..."
+                    className="bg-transparent border-none outline-none ml-3 w-full text-sm text-gray-700 placeholder-gray-400"
+                />
+            </div>
+
+            {/* Cụm User bên phải */}
+            <div className="flex items-center gap-5">
+                <button className="relative text-gray-400 hover:text-blue-600 transition-colors">
                     <Bell size={20} />
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-                <div className="h-8 w-8 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center cursor-pointer">
-                    <span className="text-sm font-bold text-blue-700">AD</span>
+
+                <div className="flex items-center gap-3 cursor-pointer group">
+                    <img
+                        src="https://ui-avatars.com/api/?name=Khoa+Nguyen&background=0D8ABC&color=fff"
+                        alt="Avatar"
+                        className="w-8 h-8 rounded-full border border-gray-200 shadow-sm"
+                    />
                 </div>
             </div>
         </header>
     );
-}
+};

@@ -1,18 +1,20 @@
 import React from 'react';
-// Import ClientWrapper và các component của Client...
+
+import { ClientWrapper } from '../../layouts/wrappers/index_client.jsx'; 
+import { Home } from '../../pages/client/Home/index.jsx'; 
 
 export const clientRoutes = [
     {
         path: '/',
-        // element: <ClientWrapper />, // Bạn tự tạo ClientWrapper sau nhé
+        element: <ClientWrapper />, 
         children: [
             {
                 index: true,
-                element: <div>Trang chủ Client</div>
+                element: <Home />
             },
             {
-                path: 'products',
-                element: <div>Trang danh sách sản phẩm</div>
+                path: 'services',
+                element: <div className="p-20 text-center text-2xl font-bold">Trang danh sách dịch vụ (Đang xây dựng)</div>
             }
         ]
     }

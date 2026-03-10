@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { FileQuestion, ArrowLeft } from 'lucide-react';
 
 export default function App() {
+    const navigate = useNavigate();
+
     // Hàm xử lý nút quay lại (Có thể thay thế bằng useNavigate của react-router-dom trong dự án thực tế)
     const handleBackHome = () => {
         navigate('/')

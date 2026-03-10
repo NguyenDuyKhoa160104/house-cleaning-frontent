@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom'; // Thêm dòng này
-import AdminWrapper from '../../layouts/wrappers/index_admin.jsx';
+import { AdminWrapper } from '../../layouts/wrappers/index_admin.jsx';
 import AdminDashboard from '../../pages/admin/Dashboard/index.jsx';
 
 export const adminRoutes = [

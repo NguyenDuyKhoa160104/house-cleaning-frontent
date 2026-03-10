@@ -1,36 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
-import AdminSidebar from '../../layouts/components/admin/sidebar/index.jsx';
-import AdminHeader from '../../layouts/components/admin/header/index.jsx';
-import AdminFooter from '../../layouts/components/admin/footer/index.jsx';
+import { AdminSidebar } from '../components/admin/sidebar/index.jsx';
+import { AdminHeader } from '../components/admin/header/index.jsx';
+import { AdminFooter } from '../components/admin/footer/index.jsx';
 
-export default function AdminWrapper() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
+export const AdminWrapper = () => {
     return (
-        <div className="flex h-screen bg-gray-50 font-sans">
-            {isSidebarOpen && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
-                    onClick={toggleSidebar}
-                ></div>
-            )}
+        <div className="min-h-screen bg-slate-50 font-sans">
+            <AdminHeader />
+            <AdminSidebar />
 
-            <AdminSidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-            <main className="flex-1 flex flex-col overflow-hidden">
-                <AdminHeader toggleSidebar={toggleSidebar} />
-
-                <div className="flex-1 overflow-auto flex flex-col">
-                    {/* Outlet sẽ tự động render AdminDashboard hoặc các page khác tuỳ thuộc vào URL */}
-                    <div className="flex-1">
-                        <Outlet />
-                    </div>
-
-                    <AdminFooter />
+            {/* main chừa khoảng trống pt-24 (tránh header) và pl-28 (tránh icon bên trái) */}
+            <main className="pt-24 pl-[110px] pr-8 pb-8 min-h-screen flex flex-col">
+                <div className="bg-white flex-1 rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <Outlet />
                 </div>
+
+                <AdminFooter />
             </main>
         </div>
     );
-}
+};

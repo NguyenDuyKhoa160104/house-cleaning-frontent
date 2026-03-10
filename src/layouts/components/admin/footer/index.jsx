@@ -1,9 +1,10 @@
 import React from 'react';
 
-export default function AdminFooter() {
+export const AdminFooter = () => {
     return (
-        <footer className="bg-white border-t border-gray-200 py-4 px-6 text-center text-sm text-gray-500 mt-auto">
-            <p>&copy; {new Date().getFullYear()} AdminPro. All rights reserved.</p>
+        <footer className="py-4 px-8 text-sm text-gray-400 font-medium flex justify-between items-center">
+            <p>&copy; {new Date().getFullYear()} CleanPro Dashboard.</p>
+            <p>Hệ thống điều phối v1.0</p>
         </footer>
     );
-}
+};
