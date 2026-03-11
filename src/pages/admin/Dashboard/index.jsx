@@ -82,7 +82,8 @@ const RecentOrders = () => {
     );
 };
 
-export default function AdminDashboard() {
+// ĐÃ SỬA THÀNH EXPORT CONST Ở ĐÂY
+export const AdminDashboard = () => {
     return (
         <div className="p-4 sm:p-6 lg:p-8 flex-1">
             <div className="mb-8">
@@ -100,4 +101,4 @@ export default function AdminDashboard() {
             <RecentOrders />
         </div>
     );
-}
+};

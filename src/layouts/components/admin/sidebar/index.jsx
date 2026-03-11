@@ -1,75 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-    LayoutDashboard,
-    CalendarCheck,
-    Users,
-    UserCog,
-    AlertCircle,
-    Wallet,
-    Settings,
-    LogOut
+    LayoutDashboard, CalendarCheck, Users, UserCog,
+    AlertCircle, Wallet, Settings, LogOut, IdCard
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+
+import { SidebarItem } from './sidebarItem.jsx';
+import { MobileTrigger } from './mobileTrigger.jsx';
 
 export const AdminSidebar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
 
     const menuItems = [
         { name: 'Tổng quan', icon: LayoutDashboard, path: '/admin/dashboard' },
         { name: 'Quản lý Ca dọn', icon: CalendarCheck, path: '/admin/bookings' },
+        { name: 'Nhân sự', icon: IdCard, path: '/admin/staffs' },
         { name: 'Thợ dọn dẹp', icon: UserCog, path: '/admin/cleaners' },
         { name: 'Khách hàng', icon: Users, path: '/admin/customers' },
         { name: 'Khiếu nại', icon: AlertCircle, path: '/admin/complaints' },
         { name: 'Tài chính', icon: Wallet, path: '/admin/finance' },
     ];
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/admin/login', { replace: true });
+    };
+
     return (
-        <aside className="fixed left-6 top-24 z-50 flex flex-col gap-5">
-            {menuItems.map((item) => {
-                const isActive = location.pathname.includes(item.path);
-                return (
-                    <div key={item.name} className="relative group flex items-center">
-                        <Link
-                            to={item.path}
-                            className={`w-12 h-12 rounded-full bg-white border flex items-center justify-center transition-all duration-200 z-10 relative ${isActive
-                                    ? 'border-blue-500 text-blue-600 shadow-md ring-4 ring-blue-50'
-                                    : 'border-gray-300 text-gray-600 shadow-sm hover:border-blue-400 hover:text-blue-500 hover:shadow-md'
-                                }`}
-                        >
-                            <item.icon size={20} />
-                        </Link>
+        <>
+            <MobileTrigger isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
 
-                        {/* Thẻ tên có hiệu ứng trượt ra (slide-out) */}
-                        <div className="absolute left-[calc(100%+1rem)] bg-white border border-gray-200 text-gray-700 text-sm font-semibold px-4 py-2.5 rounded-xl opacity-0 invisible -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 group-hover:visible shadow-lg transition-all duration-300 whitespace-nowrap z-0">
-                            {/* Mũi tên nhỏ chĩa về phía icon */}
-                            <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-gray-200 rotate-45"></div>
-                            {item.name}
-                        </div>
-                    </div>
-                );
-            })}
+            {/* Overlay đóng menu khi bấm ra ngoài */}
+            {isOpen && <div className="lg:hidden fixed inset-0 z-[999]" onClick={() => setIsOpen(false)} />}
 
-            <div className="w-8 h-px bg-gray-300 mx-auto my-2"></div>
-
-            <div className="relative group flex items-center">
-                <Link to="/admin/settings" className="w-12 h-12 rounded-full bg-white border border-gray-300 text-gray-600 shadow-sm flex items-center justify-center hover:border-blue-400 hover:text-blue-500 hover:shadow-md transition-all duration-200 z-10 relative">
-                    <Settings size={20} />
-                </Link>
-                <div className="absolute left-[calc(100%+1rem)] bg-white border border-gray-200 text-gray-700 text-sm font-semibold px-4 py-2.5 rounded-xl opacity-0 invisible -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 group-hover:visible shadow-lg transition-all duration-300 whitespace-nowrap z-0">
-                    <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-gray-200 rotate-45"></div>
-                    Cài đặt
+            <aside className={`
+                fixed transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
+                lg:z-[50] lg:left-6 lg:top-24 lg:translate-x-0 lg:w-auto lg:h-auto lg:bg-transparent
+                max-lg:z-[1001] max-lg:top-6 max-lg:bottom-24 max-lg:right-6 
+                max-lg:bg-white/80 max-lg:backdrop-blur-2xl max-lg:rounded-[2.5rem] 
+                max-lg:border max-lg:border-white/50 max-lg:shadow-2xl 
+                max-lg:flex max-lg:flex-col max-lg:p-5 max-lg:w-20
+                ${isOpen ? 'max-lg:translate-x-0' : 'max-lg:translate-x-[150%]'}
+            `}>
+                <div className="flex flex-col gap-5 items-center">
+                    {menuItems.map((item) => (
+                        <SidebarItem
+                            key={item.name}
+                            item={item}
+                            isActive={location.pathname.includes(item.path)}
+                            onClick={() => setIsOpen(false)}
+                        />
+                    ))}
                 </div>
-            </div>
 
-            <div className="relative group flex items-center">
-                <button className="w-12 h-12 rounded-full bg-white border border-gray-300 text-gray-600 shadow-sm flex items-center justify-center hover:border-red-400 hover:text-red-500 hover:shadow-md transition-all duration-200 z-10 relative">
-                    <LogOut size={20} />
-                </button>
-                <div className="absolute left-[calc(100%+1rem)] bg-white border border-red-200 text-red-600 text-sm font-semibold px-4 py-2.5 rounded-xl opacity-0 invisible -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 group-hover:visible shadow-lg transition-all duration-300 whitespace-nowrap z-0">
-                    <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-3 bg-white border-l border-b border-red-200 rotate-45"></div>
-                    Đăng xuất
+                <div className="hidden lg:block flex-1 min-h-[40px]"></div>
+
+                <div className="flex flex-col gap-5 items-center mt-auto lg:mt-0">
+                    <SidebarItem
+                        item={{ name: 'Cài đặt', icon: Settings, path: '/admin/settings' }}
+                        isActive={location.pathname.includes('/admin/settings')}
+                        onClick={() => setIsOpen(false)}
+                    />
+                    <button onClick={handleLogout} className="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                        <LogOut size={20} />
+                    </button>
                 </div>
-            </div>
-        </aside>
+            </aside>
+        </>
     );
 };
